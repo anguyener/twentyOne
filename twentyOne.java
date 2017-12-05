@@ -30,7 +30,7 @@ public class twentyOne {
 		currentDecks = deal(twentyOne, 3);
 		question(currentDecks);
 		//print(currentDecks);
-		
+
 
 
 	}
@@ -71,48 +71,27 @@ public class twentyOne {
 		}
 	}
 
-	public static void question(ArrayList<ArrayList<String>> decks) {
+	public static void question(ArrayList<ArrayList<String>> decks) { //display all three decks at once and let user pick which one... 1 2 or 3 (also use for cases.)
 		int q = 0;
 		int c = 0;
 		//	decks = deal(decks, decks.size()); initial deal in main...
 		while(q < decks.size()) {
-			System.out.println("Round: "+q+", stack: "+c);
-			display(decks.get(c));
-			System.out.println("\nIs your card in this deck? Type y or n.");
-			String answer = scan.nextLine();
-			if(answer.equals("y") && q == 2) { //dont want to deal 4th time...
-				//System.out.println("THIS IS THE END...");
-				ArrayList<String> t = collect(decks, c);
-				LinkedList<String> temp = new LinkedList<String>();
-				for(String card: t) {
-					temp.add(card);
-				}
-				int count = 0;
-				while(!temp.isEmpty()) {
-					for(int i = 0; i < 21; i++) {
-						//System.out.println(temp.getFirst());
-						decks.get(count).set(i%7, temp.removeFirst());
-						if(i%7 == 0 && i != 0) count++;
-					}
-				}
-				q++;											
-				c = 0;
-				//print(decks);
-				System.out.println("Your card is: "+ decks.get(1).get(3));
+			for(ArrayList<String> d: decks) {
+				display(d);
 			}
-			else if(answer.equals("y")) {
-				decks = deal(collect(decks, c), decks.size()); //careful with decks.length in collect
-				q++;											//currently only 3 cases and default
-				c = 0;
-			}
-			else c++;
+			System.out.println("Which deck is your card in? Type 1, 2, or 3.");
+			int answer = scan.nextInt();
+			decks = deal(collect(decks, answer-1), decks.size());
+			q++;
 		}
+		System.out.println("Your card is: "+ decks.get(1).get(3));
 	}
 
 	//Displays one deck of cards
 	public static void display(ArrayList<String> cards) {
 		for(int i = 0; i < cards.size(); i++)
 			System.out.print(cards.get(i) + " " );
+		System.out.println();
 	}
 
 
